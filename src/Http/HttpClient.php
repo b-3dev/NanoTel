@@ -7,7 +7,7 @@ use GuzzleHttp\Client as GuzzleClient;
 
 class HttpClient implements HttpClientInterface
 {
-    private static ?GuzzleClient $client;
+    private static ?GuzzleClient $client = null;
 
     public function __construct(string $baseUri, int $timeOut, int $connectTimeOut)
     {
@@ -22,7 +22,7 @@ class HttpClient implements HttpClientInterface
     public static function request(string $method, array $options = []): mixed
     {
         if (!self::$client) {
-            throw new \Exceptions\HttpClientNotInitialized("HTTP client is not initialized");
+            throw new \NanoTel\Exceptions\HttpClient\HttpClientNotInitialized("HTTP client is not initialized");
         }
 
         $response = static::$client->post($method, ['json' => $options])->getBody()->getContents();

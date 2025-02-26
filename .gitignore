@@ -1,0 +1,10 @@
+vendor/
+src-00/
+bot.php
+code.php
+TelegramAPI.php
+index.json
+*.log
+*.txt
+composer.lock
+composer.json text eol=lf

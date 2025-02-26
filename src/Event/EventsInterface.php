@@ -4,7 +4,7 @@ namespace NanoTel\Event;
 
 interface EventsInterface
 {
-    public static function getEvents(): array;
+    public static function getEvents(): object;
 
     public static function InsertEvent(array $event): void;
 

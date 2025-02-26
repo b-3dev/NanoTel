@@ -8,14 +8,18 @@ class Events implements EventsInterface
 {
     private static array $events = [];
 
-    public static function getEvents(): array
+    public static function getEvents(): object
     {
         if (empty(self::$events)) {
             $response = file_get_contents("php://input");
-            self::$events = json_decode($response);
+            $decoded = json_decode($response, true);
+            if ($decoded === null) {
+                throw new \Exception("Invalid JSON received.");
+            }
+            self::$events = $decoded;
         }
-        
-        return self::$events;
+
+        return (object) self::$events; 
     }
 
     public static function InsertEvent(array $event): void

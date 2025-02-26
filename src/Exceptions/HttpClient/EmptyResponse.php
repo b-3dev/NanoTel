@@ -2,4 +2,4 @@
 
 namespace NanoTel\Exceptions\HttpClient;
 
-class HttpRequestTimeOut extends \Exception {}
+class EmptyResponse extends \Exception {}

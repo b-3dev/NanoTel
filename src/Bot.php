@@ -2,17 +2,23 @@
 
 namespace NanoTel\Bot;
 
+use NanoTel\Http\HttpClient;
+
 class Bot {
 
     public static $BOT_TOKEN;
 
     public static $BASE_URL;
 
-    public function __construct(string $botToken, string $baseUrl = null) {
+    private static $CLIENT;
+
+    public function __construct(string $botToken, int $timeOut = 10, int $connectTimeOut = 5, string $baseUrl = null) {
         if (self::$BOT_TOKEN === null) {
-            self::$BOT_TOKEN = $botToken;
+            self::$BOT_TOKEN   = $botToken;
         }
-        self::$BASE_URL = (self::$BASE_URL === null) ? rtrim($baseUrl, '/') : "https://api.telegram.org/bot";
-        
+        self::$BASE_URL  = (self::$BASE_URL === null) ? rtrim($baseUrl, '/') : "https://api.telegram.org/bot";
+        self::$BASE_URL .= self::$BOT_TOKEN;
+
+        self::$CLIENT    = new HttpClient(self::$BASE_URL, $timeOut, $connectTimeOut);
     }
 }

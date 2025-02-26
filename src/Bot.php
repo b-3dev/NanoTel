@@ -1,6 +1,6 @@
 <?php
 
-namespace NanoTel\Bot;
+namespace NanoTel;
 
 use NanoTel\Http\HttpClient;
 

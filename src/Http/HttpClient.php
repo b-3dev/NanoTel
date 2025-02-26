@@ -22,7 +22,7 @@ class HttpClient implements HttpClientInterface
     public static function request(string $method, array $options = []): mixed
     {
         if (!self::$client) {
-            throw new \Exceptions\TelegramException("HTTP client is not initialized.");
+            throw new \Exceptions\HttpClientNotInitialized("HTTP client is not initialized");
         }
 
         $response = static::$client->post($method, ['json' => $options])->getBody()->getContents();

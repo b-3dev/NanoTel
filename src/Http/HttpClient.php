@@ -25,8 +25,26 @@ class HttpClient implements HttpClientInterface
             throw new \NanoTel\Exceptions\HttpClient\HttpClientNotInitialized("HTTP client is not initialized");
         }
 
-        $response = static::$client->post($method, ['json' => $options])->getBody()->getContents();
+        $response = static::$client->post($method, ['json' => $options]);
 
-        return json_decode($response);
+        return self::Handle($response);
+    }
+
+    private static function Handle($response)
+    {
+        $data = json_decode($response->getBody()->getContents());
+        $statusCode = $response->getStatusCode();
+
+        if (empty($data)) {
+            throw new \NanoTel\Exceptions\HttpClient\EmptyResponse("No response received from the server");
+        }
+        else if ($statusCode == 400) {
+            throw new \NanoTel\Exceptions\Telegram\InvalidParameter("Invalid value provided");
+        }
+        else if ($statusCode == 200) {
+            return $data;
+        }
+    
+        throw new \NanoTel\Exceptions\Telegram\RequestError("Request failed: " . ($data->description ?? "Unknown error") . " -> Code: {$statusCode}");
     }
 }

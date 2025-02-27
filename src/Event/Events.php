@@ -13,9 +13,6 @@ class Events implements EventsInterface
         if (empty(self::$events)) {
             $response = file_get_contents("php://input");
             $decoded = json_decode($response, true);
-            if ($decoded === null) {
-                throw new \Exception("Invalid JSON received.");
-            }
             self::$events = $decoded;
         }
 

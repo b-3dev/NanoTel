@@ -30,7 +30,7 @@ class HttpClient implements HttpClientInterface
         return self::Handle($response);
     }
 
-    private static function Handle($response)
+    private static function Handle($response): object
     {
         $data = json_decode($response->getBody()->getContents());
         $statusCode = $response->getStatusCode();
@@ -42,7 +42,7 @@ class HttpClient implements HttpClientInterface
             throw new \NanoTel\Exceptions\Telegram\InvalidParameter("Invalid value provided");
         }
         else if ($statusCode == 200) {
-            return $data;
+            return (object) $data;
         }
     
         throw new \NanoTel\Exceptions\Telegram\RequestError("Request failed: " . ($data->description ?? "Unknown error") . " -> Code: {$statusCode}");

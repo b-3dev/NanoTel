@@ -45,6 +45,6 @@ class HttpClient implements HttpClientInterface
             return (object) $data;
         }
     
-        throw new \NanoTel\Exceptions\Telegram\RequestError("Request failed: " . ($data->description ?? "Unknown error") . " -> Code: {$statusCode}");
+        throw new \NanoTel\Exceptions\Telegram\RequestError("Request failed: " . ($data->description ?? $data->error ?? "Unknown error") . " -> Code: {$statusCode}");
     }
 }
